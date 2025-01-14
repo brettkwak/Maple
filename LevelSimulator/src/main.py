@@ -14,15 +14,23 @@ print(daily_quest_data)
 print(monster_park_data)
 
 # Input Level, EXP
-current_level = input("현재 레벨 : ")
-current_exp = input("현재 경험치 : ")
+current_level = int(input("현재 레벨 : "))
+current_exp = int(input("현재 경험치 : "))
 level_exp = 0
+
+def exp_left(current_level, current_exp):
+    df = level_exp_data
+    exp = df[df['Level'] == current_level + 1]['EXP'].values[0]
+    string_exp = f"{exp:,}"
+    return string_exp
+# Test
+exp_left(current_level, current_exp)
 
 # Function to find out data range
 def exp_range(current_level, current_exp):
-    print("현재 레벨 : " + current_level)
-    print("현재 경험치 : " + current_exp)
-    print("다음 레벨까지 남은 경험치 : ")
+    print("현재 레벨 : " + str(current_level))
+    print("현재 경험치 : " + str(current_exp))
+    print("다음 레벨까지 남은 경험치 : " + exp_left(current_level, current_exp))
     print("일일 퀘스트 지역 : ")
     print("일일 퀘스트 경험치 : ")
     print("몬스터 파크 지역 : ")
