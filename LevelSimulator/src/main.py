@@ -18,6 +18,7 @@ current_level = int(input("현재 레벨 : "))
 current_exp = int(input("현재 경험치 : "))
 level_exp = 0
 
+# Function to calculate needed XP to next level
 def exp_left(current_level, current_exp):
     df = level_exp_data
     exp = df[df['Level'] == current_level + 1]['EXP'].values[0] - current_exp
