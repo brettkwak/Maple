@@ -18,6 +18,19 @@ current_level = input("현재 레벨 : ")
 current_exp = input("현재 경험치 : ")
 level_exp = 0
 
+# Function to find out data range
+def exp_range(current_level, current_exp):
+    print("현재 레벨 : " + current_level)
+    print("현재 경험치 : " + current_exp)
+    print("다음 레벨까지 남은 경험치 : ")
+    print("일일 퀘스트 지역 : ")
+    print("일일 퀘스트 경험치 : ")
+    print("몬스터 파크 지역 : ")
+    print("몬스터 파크 경험치 : ")
+    return None
+# Test
+exp_range(current_level, current_exp)
+
 # Setting Input
 input("일일 퀘스트? (Y/N) : ")
 input("주간 퀘스트? (Y/N) : ")
