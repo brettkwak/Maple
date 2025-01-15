@@ -132,6 +132,11 @@ def get_monster_park(level):
         index = 9
     return fetch_monster_park_data(index)
 
+# Function to change int format to string
+def int_to_str(number):
+    number = f"{number:,}"
+    return number
+
 # Function to find out data range
 def exp_range(current_level, current_exp):
     print("현재 레벨 : " + str(current_level))
@@ -139,10 +144,10 @@ def exp_range(current_level, current_exp):
     print("다음 레벨까지 남은 경험치 : " + exp_left(current_level, current_exp))
     daily_quest_location, daily_quest_exp = get_daily_quest(current_level)
     print("일일 퀘스트 지역 : " + daily_quest_location)
-    print("일일 퀘스트 경험치 : " + daily_quest_exp)
+    print("일일 퀘스트 경험치 : " + int_to_str(daily_quest_exp))
     monster_park_location, monster_park_exp = get_monster_park(current_level)
     print("몬스터 파크 지역 : " + monster_park_location)
-    print("몬스터 파크 경험치 : " + monster_park_exp)
+    print("몬스터 파크 경험치 : " + int_to_str(monster_park_exp))
     return None
 # Test
 exp_range(current_level, current_exp)
