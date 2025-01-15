@@ -154,13 +154,26 @@ exp_range(current_level, current_exp)
 
 # Setting Input
 input("일일 퀘스트? (Y/N) : ")
-input("주간 퀘스트? (Y/N) : ")
+# input("주간 퀘스트? (Y/N) : ")
 input("몬스터 파크 횟수 : ")
+
+# Fuction to calculate level and EXP
+def calculate_new_level_and_exp(current_level, current_exp):
+    _, daily_exp = get_daily_quest(current_level)
+    _, monster_park_exp = get_monster_park(current_level)
+    df = level_exp_data
+    current_level_total_exp = df[df['Level'] == current_level]['EXP'].values[0]
+    current_exp = current_exp + daily_exp + monster_park_exp
+    if  current_exp > current_level_total_exp:
+        current_exp = current_exp - current_level_total_exp
+        current_level = current_level + 1
+    return current_level, current_exp
 
 # Result Example
 print("계산 전 레벨 / 경험치")
 print("Lv. " + str(current_level))
 print(str(current_exp) + " / " + str(level_exp))
+result_level, result_exp = calculate_new_level_and_exp(current_level, current_exp)
 print("계산 후 레벨 / 경험치")
-print("Lv. " + str(current_level))
-print(str(current_exp) + " / " + str(level_exp))
+print("Lv. " + str(result_level))
+print(str(result_exp) + " / " + str(level_exp))
