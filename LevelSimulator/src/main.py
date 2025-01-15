@@ -67,6 +67,27 @@ def get_daily_quest(level):
     elif 255 <= level < 260:
         # 리멘
         index = 9
+    elif 260 <= level < 265:
+        # 세르니움
+        index = 10
+    elif 265 <= level < 270:
+        # 호텔 아르크스
+        index = 11
+    elif 270 <= level < 275:
+        # 오디움
+        index = 12
+    elif 275 <= level < 280:
+        # 도원경
+        index = 13
+    elif 280 <= level < 285:
+        # 아르테르아
+        index = 14
+    elif 285 <= level < 290:
+        # 카르시온
+        index = 15
+    elif 290 <= level < 295:
+        # 탈라하트
+        index = 16
     return fetch_daily_quest_data(index)
 
 # Function to find out data range
