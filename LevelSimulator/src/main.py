@@ -90,6 +90,48 @@ def get_daily_quest(level):
         index = 16
     return fetch_daily_quest_data(index)
 
+# Function to fetch monster park data
+def fetch_monster_park_data(index):
+    df = monster_park_data
+    row = df.iloc[index]
+    location = row['Name']
+    exp = row['EXP']
+    return location, exp
+
+# Function to find out monster park location
+def get_monster_park(level):
+    if 200 <= level < 210:
+        # 여로
+        index = 0
+    elif 210 <= level < 220:
+        # 츄츄
+        index = 1
+    elif 220 <= level < 225:
+        # 레헬른
+        index = 2
+    elif 225 <= level < 230:
+        # 아르카나
+        index = 3
+    elif 230 <= level < 235:
+        # 모라스
+        index = 4
+    elif 235 <= level < 240:
+        # 에스페라
+        index = 5
+    elif 240 <= level < 245:
+        # 셀라스
+        index = 6
+    elif 245 <= level < 250:
+        # 문브릿지
+        index = 7
+    elif 250 <= level < 255:
+        # 고통의 미궁
+        index = 8
+    elif 255 <= level < 260:
+        # 리멘
+        index = 9
+    return fetch_monster_park_data(index)
+
 # Function to find out data range
 def exp_range(current_level, current_exp):
     print("현재 레벨 : " + str(current_level))
@@ -98,8 +140,9 @@ def exp_range(current_level, current_exp):
     daily_quest_location, daily_quest_exp = get_daily_quest(current_level)
     print("일일 퀘스트 지역 : " + daily_quest_location)
     print("일일 퀘스트 경험치 : " + daily_quest_exp)
-    print("몬스터 파크 지역 : ")
-    print("몬스터 파크 경험치 : ")
+    monster_park_location, monster_park_exp = get_monster_park(current_level)
+    print("몬스터 파크 지역 : " + monster_park_location)
+    print("몬스터 파크 경험치 : " + monster_park_exp)
     return None
 # Test
 exp_range(current_level, current_exp)
