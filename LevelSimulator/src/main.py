@@ -21,7 +21,7 @@ level_exp = 0
 # Function to calculate needed XP to next level
 def exp_left(current_level, current_exp):
     df = level_exp_data
-    exp = df[df['Level'] == current_level + 1]['EXP'].values[0] - current_exp
+    exp = df[df['Level'] == current_level]['EXP'].values[0] - current_exp
     string_exp = f"{exp:,}"
     return string_exp
 # Test
