@@ -177,13 +177,11 @@ def get_exp(level):
 
 # Result Example
 level_exp = get_exp(current_level)
-level_exp = f"{level_exp:,}"
 print("계산 전 레벨 / 경험치")
 print("Lv. " + str(current_level))
-print(int_to_str(current_exp) + " / " + str(level_exp))
+print(int_to_str(current_exp) + " / " + f"{level_exp:,}")
 result_level, result_exp = calculate_new_level_and_exp(current_level, current_exp)
 level_exp = get_exp(result_level)
-level_exp = f"{level_exp:,}"
 print("계산 후 레벨 / 경험치")
 print("Lv. " + str(result_level))
-print(int_to_str(result_exp) + " / " + str(level_exp))
+print(int_to_str(result_exp) + " / " + f"{level_exp:,}")
