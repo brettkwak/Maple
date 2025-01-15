@@ -169,11 +169,21 @@ def calculate_new_level_and_exp(current_level, current_exp):
         current_level = current_level + 1
     return current_level, current_exp
 
+# Function to get exp corresponding to level
+def get_exp(level):
+    df = level_exp_data
+    level_exp = df[df['Level'] == level]['EXP'].values[0]
+    return level_exp
+
 # Result Example
+level_exp = get_exp(current_level)
+level_exp = f"{level_exp:,}"
 print("계산 전 레벨 / 경험치")
 print("Lv. " + str(current_level))
 print(int_to_str(current_exp) + " / " + str(level_exp))
 result_level, result_exp = calculate_new_level_and_exp(current_level, current_exp)
+level_exp = get_exp(result_level)
+level_exp = f"{level_exp:,}"
 print("계산 후 레벨 / 경험치")
 print("Lv. " + str(result_level))
 print(int_to_str(result_exp) + " / " + str(level_exp))
