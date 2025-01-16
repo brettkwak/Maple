@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import datetime, timedelta
 
 # Fuction to load the data
 def load_data(file_path):
@@ -178,11 +179,16 @@ def get_exp(level):
 
 # Result Example
 level_exp = get_exp(current_level)
+current_datetime = datetime.now()
+new_datetime = current_datetime
+print("날짜 : " + current_datetime.strftime("%Y-%m-%d"))
 print("계산 전 레벨 / 경험치")
 print("Lv. " + str(current_level))
 print(int_to_str(current_exp) + " / " + f"{level_exp:,}")
 print("( " + str(round(current_exp/level_exp*100, 3)) + " % )")
 while days_passed > 0:
+    new_datetime = new_datetime + timedelta(days=1)
+    print("날짜 : " + new_datetime.strftime("%Y-%m-%d"))
     current_level, current_exp = calculate_new_level_and_exp(current_level, current_exp)
     level_exp = get_exp(current_level)
     print("계산 후 레벨 / 경험치")
@@ -190,3 +196,4 @@ while days_passed > 0:
     print(int_to_str(current_exp) + " / " + f"{level_exp:,}")
     print("( " + str(round(current_exp/level_exp*100, 3)) + " % )")
     days_passed -= 1
+    print("")
