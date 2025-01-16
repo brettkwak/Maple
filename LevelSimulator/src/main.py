@@ -158,6 +158,7 @@ input("일일 퀘스트? (Y/N) : ")
 # input("주간 퀘스트? (Y/N) : ")
 input("몬스터 파크 횟수 : ")
 days_passed = int(input("반복 횟수 : "))
+burning_mode = input("버닝? ( 하이퍼 = H, 하이퍼 맥스 = M ) : ")
 
 # Fuction to calculate level and EXP
 def calculate_new_level_and_exp(current_level, current_exp):
@@ -168,7 +169,12 @@ def calculate_new_level_and_exp(current_level, current_exp):
     current_exp = current_exp + daily_exp + monster_park_exp
     if  current_exp > current_level_total_exp:
         current_exp = current_exp - current_level_total_exp
-        current_level = current_level + 1
+        if burning_mode == "H":
+            current_level = current_level + 3
+        elif burning_mode == "M":
+            current_level = current_level + 5
+        else:
+            current_level = current_level + 1
     return current_level, current_exp
 
 # Function to get exp corresponding to level
