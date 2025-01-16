@@ -156,6 +156,7 @@ exp_range(current_level, current_exp)
 input("일일 퀘스트? (Y/N) : ")
 # input("주간 퀘스트? (Y/N) : ")
 input("몬스터 파크 횟수 : ")
+days_passed = int(input("반복 횟수 : "))
 
 # Fuction to calculate level and EXP
 def calculate_new_level_and_exp(current_level, current_exp):
@@ -181,9 +182,11 @@ print("계산 전 레벨 / 경험치")
 print("Lv. " + str(current_level))
 print(int_to_str(current_exp) + " / " + f"{level_exp:,}")
 print("( " + str(round(current_exp/level_exp*100, 3)) + " % )")
-result_level, result_exp = calculate_new_level_and_exp(current_level, current_exp)
-level_exp = get_exp(result_level)
-print("계산 후 레벨 / 경험치")
-print("Lv. " + str(result_level))
-print(int_to_str(result_exp) + " / " + f"{level_exp:,}")
-print("( " + str(round(result_exp/level_exp*100, 3)) + " % )")
+while days_passed > 0:
+    current_level, current_exp = calculate_new_level_and_exp(current_level, current_exp)
+    level_exp = get_exp(current_level)
+    print("계산 후 레벨 / 경험치")
+    print("Lv. " + str(current_level))
+    print(int_to_str(current_exp) + " / " + f"{level_exp:,}")
+    print("( " + str(round(current_exp/level_exp*100, 3)) + " % )")
+    days_passed -= 1
