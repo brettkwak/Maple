@@ -33,7 +33,11 @@ def fetch_daily_quest_data(index):
     df = daily_quest_data
     row = df.iloc[index]
     location = row['Name']
-    exp = row['EXP']
+    exp = 0
+    while index >= 0:
+        row = df.iloc[index]
+        exp += row['EXP']
+        index -= 1
     return location, exp
 
 # Function to find out daily quest location
