@@ -57,7 +57,7 @@ def get_daily_quest(level):
     elif 230 <= level < 235:
         # 모라스
         index = 4
-    elif 235 <= level < 240:
+    elif 235 <= level < 245:
         # 에스페라
         index = 5
     elif 245 <= level < 250:
