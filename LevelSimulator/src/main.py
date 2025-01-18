@@ -56,39 +56,36 @@ def get_daily_quest(level):
     elif 235 <= level < 240:
         # 에스페라
         index = 5
-    elif 240 <= level < 245:
-        # 셀라스
-        index = 6
     elif 245 <= level < 250:
         # 문브릿지
-        index = 7
+        index = 6
     elif 250 <= level < 255:
         # 고통의 미궁
-        index = 8
+        index = 7
     elif 255 <= level < 260:
         # 리멘
-        index = 9
+        index = 8
     elif 260 <= level < 265:
         # 세르니움
-        index = 10
+        index = 9
     elif 265 <= level < 270:
         # 호텔 아르크스
-        index = 11
+        index = 10
     elif 270 <= level < 275:
         # 오디움
-        index = 12
+        index = 11
     elif 275 <= level < 280:
         # 도원경
-        index = 13
+        index = 12
     elif 280 <= level < 285:
         # 아르테르아
-        index = 14
+        index = 13
     elif 285 <= level < 290:
         # 카르시온
-        index = 15
+        index = 14
     elif 290 <= level < 295:
         # 탈라하트
-        index = 16
+        index = 15
     return fetch_daily_quest_data(index)
 
 # Function to fetch monster park data
