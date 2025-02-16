@@ -2,6 +2,7 @@ import cv2
 from skimage.metrics import structural_similarity as ssim
 import matplotlib.pyplot as plt
 
+class_name = input("Class Name : ")
 image1_name = input("Core Name : ")
 image2_name = input("Skill Name : ")
 mask_name = input("Mask Name : ")
@@ -55,7 +56,8 @@ def compare_core_with_skill(image1_path, image2_path, mask_path):
 
 # Usage
 image1_path = '../data/' + image1_name + '.png'
-image2_path = '../data/' + image2_name + '.png'
+image2_path = '../data/Class/' + class_name + "/" + image2_name + '.png'
+print(image2_path)
 mask_path = '../data/' + mask_name + '.png'
 results = compare_core_with_skill(image1_path, image2_path, mask_path)
 print(f"SSIM Score: {results['ssim_score']:.4f}")
