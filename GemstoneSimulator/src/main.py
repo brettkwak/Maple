@@ -1,6 +1,7 @@
 import cv2
 from skimage.metrics import structural_similarity as ssim
 import matplotlib.pyplot as plt
+import os
 
 class_name = input("Class Name : ")
 image1_name = input("Core Name : ")
@@ -56,11 +57,33 @@ def compare_core_with_skill(image1_path, image2_path, mask_path):
     }
 
 
+def find_matching_skill():
+    folder_path = f"../data/Class/{class_name}"
+    matching_skills = []
+
+    for filename in os.listdir(folder_path):
+        if filename.lower().endswith(".png"):
+            skill_path = os.path.join(folder_path, filename)
+
+            results = compare_core_with_skill(image1_path, skill_path, mask_path)
+
+            if results['ssim_score'] > 0.97:
+                skill_name = os.path.splitext(filename)[0]
+                matching_skills.append((skill_name, results['ssim_score']))
+
+    if matching_skills:
+        print("\nMatching Skills ")
+        for skill, score in matching_skills:
+            print(f"{skill}: {score:.4f}")
+
+    return matching_skills
+
+
 # Usage
 image1_path = '../data/' + image1_name + '.png'
 image2_path = '../data/Class/' + class_name + "/" + image2_name + '.png'
-print(image2_path)
 mask_path = '../data/' + mask_name + '.png'
 results = compare_core_with_skill(image1_path, image2_path, mask_path)
 print(f"SSIM Score: {results['ssim_score']:.4f}")
+matching_skill = find_matching_skill()
 
