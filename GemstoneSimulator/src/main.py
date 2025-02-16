@@ -57,9 +57,10 @@ def compare_core_with_skill(image1_path, image2_path, mask_path):
     }
 
 
-def find_matching_skill():
+def find_matching_skill(mask_number):
     folder_path = f"../data/Class/{class_name}"
     matching_skills = []
+    mask_path = f'../data/mask{mask_number}.png'
 
     for filename in os.listdir(folder_path):
         if filename.lower().endswith(".png"):
@@ -74,7 +75,8 @@ def find_matching_skill():
     if matching_skills:
         print("\nMatching Skills ")
         for skill, score in matching_skills:
-            print(f"{skill}: {score:.4f}")
+            print(f"{mask_number}번째 코어 : {skill}")
+            print(f"SSIM Score : {score:.4f}")
 
     return matching_skills
 
@@ -83,7 +85,8 @@ def find_matching_skill():
 image1_path = '../data/' + image1_name + '.png'
 image2_path = '../data/Class/' + class_name + "/" + image2_name + '.png'
 mask_path = '../data/' + mask_name + '.png'
-results = compare_core_with_skill(image1_path, image2_path, mask_path)
-print(f"SSIM Score: {results['ssim_score']:.4f}")
-matching_skill = find_matching_skill()
+# results = compare_core_with_skill(image1_path, image2_path, mask_path)
+# print(f"SSIM Score: {results['ssim_score']:.4f}")
+for mask_num in range(1, 4):
+    matching_skill = find_matching_skill(mask_num)
 
