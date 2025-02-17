@@ -1,13 +1,11 @@
 import cv2
 from skimage.metrics import structural_similarity as ssim
-import matplotlib.pyplot as plt
 import os
 
 class_name = input("Class Name : ")
 image1_name = input("Core Name : ")
 image2_name = input("Skill Name : ")
 mask_name = input("Mask Name : ")
-show_plot = input("Show Plot? (Yes/No) : ")
 
 def compare_core_with_skill(image1_path, image2_path, mask_path):
     # Read images and mask
@@ -27,16 +25,6 @@ def compare_core_with_skill(image1_path, image2_path, mask_path):
     gray2 = cv2.cvtColor(img2_masked, cv2.COLOR_BGR2GRAY)
     ssim_score, _ = ssim(gray1, gray2, full=True)
 
-    # Show results
-    if show_plot == "Yes":
-        plt.figure(figsize=(12, 5))
-        plt.subplot(151)
-        plt.imshow(cv2.cvtColor(img1, cv2.COLOR_BGR2RGB))
-        plt.title('Image 1')
-
-        plt.subplot(152)
-        plt.imshow(cv2.cvtColor(img2, cv2.COLOR_BGR2RGB))
-        plt.title('Image 2')
 
         plt.subplot(153)
         plt.imshow(mask, cmap='gray')
