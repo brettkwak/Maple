@@ -8,7 +8,7 @@ def get_search_area(image_width, image_hegiht):
         # x, y, width, height
         return (350, 50, 450, 600)
 
-def extract_core(small_img, large_img, image_number):
+def extract_core(small_img, large_img, image_number, previous_count=0):
     # Read images with alpha channel (Transparent)
     template = cv2.imread(small_img, cv2.IMREAD_UNCHANGED)
     full_image = cv2.imread(large_img)
@@ -32,7 +32,7 @@ def extract_core(small_img, large_img, image_number):
     h, w = template.shape[:2]
 
     # Counter for matches
-    match_count = 0
+    match_count = previous_count
 
     # Template matching with mask
     result = cv2.matchTemplate(
@@ -88,7 +88,7 @@ def extract_core(small_img, large_img, image_number):
 
             # Crop and save matched region
             cropped = image[pt[1]:pt[1] + h, pt[0]:pt[0] + w]
-            cv2.imwrite(f'../data/Extract/page_{image_number}_match_{match_count}.png', cropped)
+            cv2.imwrite(f'../data/Extract/match_{match_count}.png', cropped)
 
     # Write total counter on top of image
     text = f'Total Matches: {match_count}'
@@ -103,8 +103,10 @@ def extract_core(small_img, large_img, image_number):
 
 # Main
 page_count = int(input("Number of pages : "))
+small_image_path = f"../data/inner_tight.png"
+total_matches = 0
 for i in range(1, page_count + 1):
-    small_image_path = f"../data/inner_tight.png"
     large_image_path = f"../data/page{i}.png"
-    total_matches = extract_core(small_image_path, large_image_path, i)
+    print(f"Extracting core from page{i}.png...")
+    total_matches = extract_core(small_image_path, large_image_path, i, total_matches)
     print(f"Total matches found: {total_matches}")
