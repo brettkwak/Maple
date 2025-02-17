@@ -88,7 +88,7 @@ def extract_core(small_img, large_img, image_number):
 
             # Crop and save matched region
             cropped = image[pt[1]:pt[1] + h, pt[0]:pt[0] + w]
-            cv2.imwrite(f'../data/Extract/page_{image_number}_match_{match_count}.jpg', cropped)
+            cv2.imwrite(f'../data/Extract/page_{image_number}_match_{match_count}.png', cropped)
 
     # Write total counter on top of image
     text = f'Total Matches: {match_count}'
@@ -96,7 +96,7 @@ def extract_core(small_img, large_img, image_number):
                 1, (0, 0, 255), 2)
 
     # Save final image with annotations
-    cv2.imwrite(f'../data/Extract/result{image_number}.jpg', image)
+    cv2.imwrite(f'../data/Extract/result{image_number}.png', image)
 
     return match_count
 
