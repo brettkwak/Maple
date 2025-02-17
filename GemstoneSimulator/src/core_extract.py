@@ -2,10 +2,20 @@ import cv2
 import numpy as np
 
 
+def get_search_area(image_width, image_hegiht):
+    # Crop search area depending on image size
+    if image_width == 1366 and image_hegiht == 768:
+        # x, y, width, height
+        return (350, 50, 450, 600)
+
 def extract_core(small_img, large_img):
     # Read images with alpha channel (Transparent)
     template = cv2.imread(small_img, cv2.IMREAD_UNCHANGED)
-    image = cv2.imread(large_img)
+    full_image = cv2.imread(large_img)
+    img_height, img_width = full_image.shape[:2]
+    x, y, w, h = get_search_area(img_width, img_height)
+    image = full_image[y:y+h, x:x+w].copy()
+    cv2.imwrite('../data/Extract/cropped_area.png', image)
 
     # Ensure template has alpha channel
     if template.shape[2] != 4:
