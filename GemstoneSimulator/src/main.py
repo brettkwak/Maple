@@ -7,58 +7,41 @@ image1_name = input("Core Name : ")
 image2_name = input("Skill Name : ")
 mask_name = input("Mask Name : ")
 
-def compare_core_with_skill(image1_path, image2_path, mask_path):
-    # Read images and mask
-    img1 = cv2.imread(image1_path)
-    img2 = cv2.imread(image2_path)
+def process_image(image_path, mask_path):
+    image = cv2.imread(image_path)
     mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
+    masked_image = cv2.bitwise_and(image, image, mask=mask)
 
     # Ensure binary mask
     # _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
 
-    # Apply same mask to both images
-    img1_masked = cv2.bitwise_and(img1, img1, mask=mask)
-    img2_masked = cv2.bitwise_and(img2, img2, mask=mask)
+    return cv2.cvtColor(masked_image, cv2.COLOR_BGR2GRAY)
 
-    # Calculate similarity using SSIM
-    gray1 = cv2.cvtColor(img1_masked, cv2.COLOR_BGR2GRAY)
-    gray2 = cv2.cvtColor(img2_masked, cv2.COLOR_BGR2GRAY)
+def compare_core_with_skill(gray1, image2_path, mask_path):
+
+    gray2 = process_image(image2_path, mask_path)
+
     ssim_score, _ = ssim(gray1, gray2, full=True)
 
 
-        plt.subplot(153)
-        plt.imshow(mask, cmap='gray')
-        plt.title('Mask')
-
-        plt.subplot(154)
-        plt.imshow(cv2.cvtColor(img1_masked, cv2.COLOR_BGR2RGB))
-        plt.title('Masked Image 1')
-
-        plt.subplot(155)
-        plt.imshow(cv2.cvtColor(img2_masked, cv2.COLOR_BGR2RGB))
-        plt.title('Masked Image 2')
-
-        plt.show()
-
-    return {
-        'ssim_score': ssim_score,
-    }
+    return ssim_score
 
 
 def find_matching_skill(mask_number):
     folder_path = f"../data/Class/{class_name}"
     matching_skills = []
     mask_path = f'../data/mask{mask_number}.png'
+    gray1 = process_image(image1_path, mask_path)
 
     for filename in os.listdir(folder_path):
         if filename.lower().endswith(".png"):
             skill_path = os.path.join(folder_path, filename)
 
-            results = compare_core_with_skill(image1_path, skill_path, mask_path)
+            ssim_score = compare_core_with_skill(gray1, skill_path, mask_path)
 
-            if results['ssim_score'] > 0.97:
+            if ssim_score > 0.97:
                 skill_name = os.path.splitext(filename)[0]
-                matching_skills.append((skill_name, results['ssim_score']))
+                matching_skills.append((skill_name, ssim_score))
 
     if matching_skills:
         print("\nMatching Skills ")
