@@ -1,3 +1,4 @@
 # .gitignore
 .venv/
 .idea/
+GemstoneSimulator/data/Extract/
