@@ -4,9 +4,19 @@ import numpy as np
 
 def get_search_area(image_width, image_hegiht):
     # Crop search area depending on image size
-    if image_width == 1366 and image_hegiht == 768:
-        # x, y, width, height
+    # x, y, width, height
+    if image_width == 800 and image_hegiht == 600:
+        return (70, 0, 450, 600)
+    elif image_width == 1024 and image_hegiht == 768:
+        return (170, 50, 450, 600)
+    elif image_width == 1280 and image_hegiht == 720:
+        return (310, 30, 450, 600)
+    elif image_width == 1366 and image_hegiht == 768:
         return (350, 50, 450, 600)
+    elif image_width == 1920 and image_hegiht == 1080:
+        return (630, 210, 450, 600)
+    else:
+        print("Check Image Size!")
 
 def extract_core(small_img, large_img, image_number, previous_count=0):
     # Read images with alpha channel (Transparent)
