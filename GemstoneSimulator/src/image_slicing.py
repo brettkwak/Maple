@@ -94,6 +94,31 @@ def match_core_with_skills(core_image_path, skill_slices):
 
     return skills
 
+
+# Process all cores into map format
+def process_all_cores(core_number, class_name):
+    skill_slices = load_skill_slices(class_name)
+    core_skills_map = {}
+
+    for core_num in range(1, core_number + 1):
+        core_path = Path(f'../data/Extract/match_{core_num}.png')
+
+        if core_path.exists():
+            print(f"Processing Core {core_num}...")
+            skills = match_core_with_skills(core_path, skill_slices)
+
+            # Only add if all three skills were matched
+            if all(skills):
+                core_skills_map[core_num] = skills
+                print(f"Core {core_num}: {', '.join(skills)}")
+            else:
+                print(f"Core {core_num}: Could not match all skills - {skills}")
+
+    return core_skills_map
+
+
+
+
 # Initialize paths
 core_path = '../data/Extract'
 mask_path = "../data/Mask"
