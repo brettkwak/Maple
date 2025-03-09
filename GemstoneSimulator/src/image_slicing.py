@@ -117,6 +117,16 @@ def process_all_cores(core_number, class_name):
     return core_skills_map
 
 
+# Save core-skill map to txt file
+def save_core_skills_map(core_skills_map):
+
+    output_file_path = Path(f'../data/core_skill_mapping.txt')
+
+    with open(output_file_path, 'w') as f:
+        for core_num, skills in core_skills_map.items():
+            f.write(f"Core {core_num}, {skills[0]}, {skills[1]}, {skills[2]}\n")
+
+    print(f"Core-skills mapping saved to {output_file_path}")
 
 
 # Initialize paths
@@ -126,7 +136,8 @@ mask_path = "../data/Mask"
 class_name = input('Class Name : ')
 core_number = int(input('Core Number : '))
 load_skill_slices(class_name)
-process_all_cores(core_number, class_name)
+core_skill_mapping = process_all_cores(core_number, class_name)
+save_core_skills_map(core_skill_mapping)
 print("Loading Done")
 
 
