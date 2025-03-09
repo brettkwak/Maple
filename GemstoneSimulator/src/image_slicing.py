@@ -2,6 +2,7 @@ from skimage.metrics import structural_similarity as ssim
 import cv2
 import os
 from pathlib import Path
+import json
 
 
 def process_image(image_path, mask_path):
@@ -117,16 +118,25 @@ def process_all_cores(core_number, class_name):
     return core_skills_map
 
 
-# Save core-skill map to txt file
+# Save core-skill map as file
 def save_core_skills_map(core_skills_map):
 
     output_file_path = Path(f'../data/core_skill_mapping.txt')
 
+    # Save as txt
     with open(output_file_path, 'w') as f:
         for core_num, skills in core_skills_map.items():
             f.write(f"Core {core_num}, {skills[0]}, {skills[1]}, {skills[2]}\n")
 
     print(f"Core-skills mapping saved to {output_file_path}")
+
+    # Save as JSON
+    json_file = output_file_path.with_suffix('.json')
+    with open(json_file, 'w') as f:
+        json.dump(core_skills_map, f, indent=2)
+
+    print(f"Core-skills mapping saved as JSON to {json_file}")
+
 
 
 # Initialize paths
