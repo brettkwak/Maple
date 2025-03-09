@@ -124,7 +124,7 @@ core_path = '../data/Extract'
 mask_path = "../data/Mask"
 
 class_name = input('Class Name : ')
-core_number = input('Core Number : ')
+core_number = int(input('Core Number : '))
 load_skill_slices(class_name)
 process_all_cores(core_number, class_name)
 print("Loading Done")
