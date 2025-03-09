@@ -73,6 +73,27 @@ def compare_images(img1, img2):
     return score
 
 
+# Match core part with skill part, and find out which skill it is
+def match_core_with_skills(core_image_path, skill_slices):
+    skills = [None, None, None]
+
+    for part_index in range(3):
+        mask_path = f'../data/Mask/mask{part_index + 1}.png'
+        core_slice = process_image(core_image_path, mask_path)
+
+        best_match = None
+        best_score = 0
+
+        for skill in skill_slices[f'part{part_index + 1}']:
+            score = compare_images(core_slice, skill['slice'])
+            if score > 0.98 and score > best_score:
+                best_match = skill['name']
+                best_score = score
+
+        skills[part_index] = best_match
+
+    return skills
+
 # Initialize paths
 core_path = '../data/Extract'
 mask_path = "../data/Mask"
