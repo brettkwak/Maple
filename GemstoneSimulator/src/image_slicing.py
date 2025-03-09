@@ -40,12 +40,36 @@ def load_core_images(skill_path, mask_path):
     return core_slices
 
 
+# Load & Slice class's skills
+def load_skill_slices(class_name):
+    skill_slices = {f'part{i + 1}': [] for i in range(3)}
+    skill_dir = Path(f'../data/Class/{class_name}')
+
+    print(f"Loading skills from {skill_dir}")
+
+    for img_path in skill_dir.glob("*.png"):
+        skill_name = img_path.stem
+        print(f'Processing {skill_name}')
+
+        for part_index in range(3):
+            mask_path = f'../data/Mask/mask{part_index + 1}.png'
+
+            processed_slice = process_image(img_path, mask_path)
+
+            skill_slices[f'part{part_index + 1}'].append({
+                'name': skill_name,
+                'slice': processed_slice,
+            })
+
+    return skill_slices
+
+
 # Initialize paths
 core_path = '../data/Extract'
 mask_path = "../data/Mask"
 
-# Load reference images once
-core_slices = load_core_images(core_path, mask_path)
+class_name = input('Class Name : ')
+load_skill_slices(class_name)
 print("Loading Done")
 
 
