@@ -18,6 +18,17 @@ def load_core_information_from_file(file_path):
     return cores
 
 
+# Print loaded cores
+def print_cores(loaded_cores):
+    print("\n=== CORES ===")
+    count = 0
+    for core_num, skills in sorted(loaded_cores.items()):
+        print(f"Core {core_num}: {', '.join(skills)}")
+        count += 1
+    print("=====================\n")
+
+
 file_path = f'../data/core_skill_mapping.txt'
 
-load_core_information_from_file(file_path)
+cores = load_core_information_from_file(file_path)
+print_cores(cores)
