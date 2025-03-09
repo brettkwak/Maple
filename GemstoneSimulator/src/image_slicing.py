@@ -64,6 +64,15 @@ def load_skill_slices(class_name):
     return skill_slices
 
 
+# Compare two images and return a similarity scrore
+def compare_images(img1, img2):
+    """Compare two images using SSIM and return similarity score."""
+    gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+    gray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+    score, _ = ssim(gray1, gray2, full=True)
+    return score
+
+
 # Initialize paths
 core_path = '../data/Extract'
 mask_path = "../data/Mask"
