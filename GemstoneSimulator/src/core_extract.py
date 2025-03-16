@@ -18,9 +18,13 @@ def get_search_area(image_width, image_hegiht):
     else:
         print("Check Image Size!")
 
-def extract_core(small_img, large_img, image_number, previous_count=0):
+def extract_core(large_img, image_number, previous_count=0):
+
+    # Mask path
+    mask_path = f"../data/inner_tight.png"
+
     # Read images with alpha channel (Transparent)
-    template = cv2.imread(small_img, cv2.IMREAD_UNCHANGED)
+    template = cv2.imread(mask_path, cv2.IMREAD_UNCHANGED)
     full_image = cv2.imread(large_img)
     img_height, img_width = full_image.shape[:2]
     x, y, w, h = get_search_area(img_width, img_height)
@@ -113,12 +117,11 @@ def extract_core(small_img, large_img, image_number, previous_count=0):
 
 def main():
     page_count = int(input("Number of pages : "))
-    small_image_path = f"../data/inner_tight.png"
     total_matches = 0
     for i in range(1, page_count + 1):
         large_image_path = f"../data/ab_{i}.png"
         print(f"Extracting core from page{i}.png...")
-        total_matches = extract_core(small_image_path, large_image_path, i, total_matches)
+        total_matches = extract_core(large_image_path, i, total_matches)
         print(f"Total matches found: {total_matches}")
     return None
 
