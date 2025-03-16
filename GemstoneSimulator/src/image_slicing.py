@@ -141,14 +141,17 @@ def save_core_skills_map(core_skills_map):
 
 
 
-def main():
+def main(class_name=None, core_number=None):
+
+    if class_name is None:
+        class_name = input("Class Name : ")
+    if core_number is None:
+        core_number = int(input("Number of cores : "))
 
     # Initialize paths
     core_path = '../data/Extract'
     mask_path = "../data/Mask"
 
-    class_name = input('Class Name : ')
-    core_number = int(input('Core Number : '))
     load_skill_slices(class_name)
     core_skill_mapping = process_all_cores(core_number, class_name)
     save_core_skills_map(core_skill_mapping)
