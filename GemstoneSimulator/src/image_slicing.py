@@ -139,15 +139,23 @@ def save_core_skills_map(core_skills_map):
 
 
 
-# Initialize paths
-core_path = '../data/Extract'
-mask_path = "../data/Mask"
-
-class_name = input('Class Name : ')
-core_number = int(input('Core Number : '))
-load_skill_slices(class_name)
-core_skill_mapping = process_all_cores(core_number, class_name)
-save_core_skills_map(core_skill_mapping)
-print("Loading Done")
 
 
+def main():
+
+    # Initialize paths
+    core_path = '../data/Extract'
+    mask_path = "../data/Mask"
+
+    class_name = input('Class Name : ')
+    core_number = int(input('Core Number : '))
+    load_skill_slices(class_name)
+    core_skill_mapping = process_all_cores(core_number, class_name)
+    save_core_skills_map(core_skill_mapping)
+    print("Loading Done")
+
+    return None
+
+
+if __name__ == "__main__":
+    main()

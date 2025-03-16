@@ -103,23 +103,31 @@ def find_core_combination(core_list, limit, core_count):
     return result
 
 
-file_path = f'../data/core_skill_mapping.txt'
+def main():
 
-cores = load_core_information_from_file(file_path)
+    file_path = f'../data/core_skill_mapping.txt'
 
-# Input skill names to filter cores
-target_skills = []
-print("Enter skill names : ")
-while True:
-    skill = input()
-    if not skill:
-        break
-    target_skills.append(skill)
+    cores = load_core_information_from_file(file_path)
 
-filtered_cores = filter_cores_with_skills(cores, target_skills)
-print(filtered_cores)
-print_cores(filtered_cores)
+    # Input skill names to filter cores
+    target_skills = []
+    print("Enter skill names : ")
+    while True:
+        skill = input()
+        if not skill:
+            break
+        target_skills.append(skill)
 
-print(target_skills)
-result = find_core_combination(filtered_cores, 3, 6)
-print(result)
+    filtered_cores = filter_cores_with_skills(cores, target_skills)
+    print(filtered_cores)
+    print_cores(filtered_cores)
+
+    print(target_skills)
+    result = find_core_combination(filtered_cores, 3, 6)
+    print(result)
+
+    return None
+
+
+if __name__ == "__main__":
+    main()
