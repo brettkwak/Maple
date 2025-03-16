@@ -115,15 +115,18 @@ def extract_core(large_img, image_number, previous_count=0):
     return match_count
 
 
-def main():
-    page_count = int(input("Number of pages : "))
+def main(page_count = None):
+
+    if page_count is None:
+        page_count = int(input("Number of pages: "))
+
     total_matches = 0
     for i in range(1, page_count + 1):
         large_image_path = f"../data/ab_{i}.png"
         print(f"Extracting core from page{i}.png...")
         total_matches = extract_core(large_image_path, i, total_matches)
         print(f"Total matches found: {total_matches}")
-    return None
+    return total_matches
 
 
 if __name__ == "__main__":
