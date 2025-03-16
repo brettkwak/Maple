@@ -7,6 +7,21 @@ def process_image(image_path, setting):
 
 
 def main():
+
+    class_name = input("직업 이름 : ")
+    limit = int(input("몇 중 : "))
+    core_count = int(input("몇 코 : "))
+    image_count = int(input("이미지 개수 : "))
+    images = ""
+
+    target_skills = []
+    print("유효 스킬 이름 : ")
+    while True:
+        skill = input()
+        if not skill:
+            break
+        target_skills.append(skill)
+
     return None
 
 
