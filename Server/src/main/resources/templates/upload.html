@@ -116,7 +116,9 @@
             <p class="upload-text">이미지를 업로드하려면 클릭하세요</p>
             <img id="imagePreview" src="#" alt="Preview" />
         </div>
-        <input type="file" id="fileInput" name="images" accept="image/*"/>
+
+        <!-- Multiple file input -->
+        <input type="file" id="fileInput" name="images" multiple accept="image/*"/>
         
         <!-- Container to display all selected images -->
         <div class="image-preview-container" id="previewContainer"></div>
@@ -176,41 +178,38 @@
         // Store uploaded files
         let uploadedFiles = [];
         
-        // Preview image when selected
-        document.getElementById('fileInput').addEventListener('change', function(event) {
-            const preview = document.getElementById('imagePreview');
-            const plusIcon = document.querySelector('.plus-icon');
-            const uploadText = document.querySelector('.upload-text');
+    // Preview images when selected
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const preview = document.getElementById('imagePreview');
+        const plusIcon = document.querySelector('.plus-icon');
+        const uploadText = document.querySelector('.upload-text');
+        
+        if (event.target.files.length > 0) {
+            // Show the first image in the main preview
+            const firstFile = event.target.files[0];
+            preview.src = URL.createObjectURL(firstFile);
+            preview.style.display = 'block';
+            plusIcon.style.display = 'none';
+            uploadText.style.display = 'none';
             
-            if (event.target.files.length > 0) {
-                const file = event.target.files[0];
-                
-                // Add to uploaded files array
+            // Add all selected files to the uploadedFiles array
+            for (let i = 0; i < event.target.files.length; i++) {
+                const file = event.target.files[i];
                 uploadedFiles.push(file);
                 
-                // Create preview for the selected image
+                // Create preview for each selected image
                 const previewUrl = URL.createObjectURL(file);
-                
-                // Show in main preview
-                preview.src = previewUrl;
-                preview.style.display = 'block';
-                plusIcon.style.display = 'none';
-                uploadText.style.display = 'none';
-                
-                // Add to preview container
                 addImagePreview(previewUrl, uploadedFiles.length - 1);
-                
-                // Reset file input to allow selecting the same file again
-                this.value = '';
-                
-                // Reset main preview after a short delay
-                setTimeout(() => {
-                    preview.style.display = 'none';
-                    plusIcon.style.display = 'block';
-                    uploadText.style.display = 'block';
-                }, 1000);
             }
-        });
+            
+            // Reset main preview after a short delay
+            setTimeout(() => {
+                preview.style.display = 'none';
+                plusIcon.style.display = 'block';
+                uploadText.style.display = 'block';
+            }, 100);
+        }
+    });
         
         // Add image preview to container
         function addImagePreview(url, index) {
