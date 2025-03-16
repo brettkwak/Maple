@@ -1,4 +1,5 @@
 import core_extract
+import image_slicing
 
 
 def process_image(image_path, setting):
@@ -24,6 +25,8 @@ def main():
 
     total_matches = core_extract.main(image_count)
     print(f"Total Matches : {total_matches}")
+
+    image_slicing.main(class_name, total_matches)
 
 
     return None
