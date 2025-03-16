@@ -165,5 +165,126 @@
 
     </form>
 
+    <script>
+        // Store uploaded files
+        let uploadedFiles = [];
+        
+        // Preview image when selected
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const preview = document.getElementById('imagePreview');
+            const plusIcon = document.querySelector('.plus-icon');
+            const uploadText = document.querySelector('.upload-text');
+            
+            if (event.target.files.length > 0) {
+                const file = event.target.files[0];
+                
+                // Add to uploaded files array
+                uploadedFiles.push(file);
+                
+                // Create preview for the selected image
+                const previewUrl = URL.createObjectURL(file);
+                
+                // Show in main preview
+                preview.src = previewUrl;
+                preview.style.display = 'block';
+                plusIcon.style.display = 'none';
+                uploadText.style.display = 'none';
+                
+                // Add to preview container
+                addImagePreview(previewUrl, uploadedFiles.length - 1);
+                
+                // Reset file input to allow selecting the same file again
+                this.value = '';
+                
+                // Reset main preview after a short delay
+                setTimeout(() => {
+                    preview.style.display = 'none';
+                    plusIcon.style.display = 'block';
+                    uploadText.style.display = 'block';
+                }, 1000);
+            }
+        });
+        
+        // Add image preview to container
+        function addImagePreview(url, index) {
+            const container = document.getElementById('previewContainer');
+            
+            const previewItem = document.createElement('div');
+            previewItem.className = 'image-preview-item';
+            previewItem.dataset.index = index;
+            
+            const img = document.createElement('img');
+            img.src = url;
+            
+            const removeButton = document.createElement('div');
+            removeButton.className = 'remove-image';
+            removeButton.innerHTML = '×';
+            removeButton.onclick = function(e) {
+                e.stopPropagation();
+                removeImage(index);
+            };
+            
+            previewItem.appendChild(img);
+            previewItem.appendChild(removeButton);
+            container.appendChild(previewItem);
+        }
+        
+        // Remove image from preview and array
+        function removeImage(index) {
+            // Remove from array
+            uploadedFiles.splice(index, 1);
+            
+            // Rebuild preview container
+            const container = document.getElementById('previewContainer');
+            container.innerHTML = '';
+            
+            // Recreate all previews with updated indices
+            uploadedFiles.forEach((file, i) => {
+                const url = URL.createObjectURL(file);
+                addImagePreview(url, i);
+            });
+        }
+        
+        // Process button click handler
+        document.getElementById('processButton').addEventListener('click', function() {
+            if (uploadedFiles.length === 0) {
+                alert('이미지를 하나 이상 업로드해주세요.');
+                return;
+            }
+            
+            // Create FormData object
+            const formData = new FormData(document.getElementById('uploadForm'));
+            
+            // Remove any existing file inputs
+            formData.delete('images');
+            
+            // Add all uploaded files
+            uploadedFiles.forEach(file => {
+                formData.append('images', file);
+            });
+            
+            // Submit the form
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                // Redirect or handle response
+                window.location.href = '/results';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('업로드 중 오류가 발생했습니다.');
+            });
+        });
+    </script>
+
+
 </body>
 </html>
