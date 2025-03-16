@@ -1,4 +1,4 @@
-
+import core_extract
 
 
 def process_image(image_path, setting):
@@ -21,6 +21,10 @@ def main():
         if not skill:
             break
         target_skills.append(skill)
+
+    total_matches = core_extract.main(image_count)
+    print(f"Total Matches : {total_matches}")
+
 
     return None
 
