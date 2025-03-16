@@ -110,12 +110,15 @@
     </div>
     
     <form method="POST" action="/upload" enctype="multipart/form-data">
+        <!-- Image upload box with plus sign -->
         <div class="image-upload-container" id="uploadBox" onclick="document.getElementById('fileInput').click()">
             <div class="plus-icon">+</div>
             <p class="upload-text">이미지를 업로드하려면 클릭하세요</p>
             <img id="imagePreview" src="#" alt="Preview" />
         </div>
         <input type="file" id="fileInput" name="images" accept="image/*"/>
+        
+        <!-- Container to display all selected images -->
         <div class="image-preview-container" id="previewContainer"></div>
 
 
