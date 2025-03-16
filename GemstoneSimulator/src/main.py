@@ -1,5 +1,6 @@
 import core_extract
 import image_slicing
+import find_combination
 
 
 def process_image(image_path, setting):
@@ -28,6 +29,7 @@ def main():
 
     image_slicing.main(class_name, total_matches)
 
+    find_combination.main(limit, core_count, target_skills)
 
     return None
 
