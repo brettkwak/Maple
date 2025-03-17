@@ -100,6 +100,38 @@
             z-index: 10;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
+
+        /* Container for the skill boxes */
+        .skill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        /* Individual skill box styling */
+        .skill-box {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            width: 200px;
+        }
+        
+        /* Skill image styling */
+        .skill-image {
+            width: 40px;
+            height: 40px;
+            margin: 0 10px;
+        }
+        
+        /* Hide skill containers */
+        .hidden {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -146,6 +178,12 @@
             </select>
         </div>
 
+        <div id="skillSelectionContainer" class="skill-container hidden">
+            <h3>강화할 스킬 선택</h3>
+            <div id="skillBoxes" class="skill-boxes">
+                <!-- Place for generated skill boxes-->
+            </div>
+        </div>
 
         <div class="form-group">
             <label for="setting">중첩:</label>
@@ -364,16 +402,24 @@
         };
     
 
+        const skillData = {
+        };
+
+
         // Run on page load
         window.onload = function() {
             const classCategorySelect = document.getElementById("classCategory");
             const classSelect = document.getElementById("class");
+            const skillContainer = document.getElementById("skillSelectionContainer");
             
             // Event on category selection
             classCategorySelect.onchange = function() {
                 // Class dropdown intialize
                 classSelect.length = 1;
                 
+                // Hide skill container
+                skillContainer.classList.add("hidden");
+
                 // Fetch class data based on category
                 const jobs = classData[this.value];
                 
@@ -384,7 +430,54 @@
                     }
                 }
             };
+
+
+            // Event on class selection
+            classSelect.onchange = function() {
+                const selectedJob = this.value;
+                
+                if (selectedJob) {
+                    // Show skill container
+                    skillContainer.classList.remove("hidden");
+                    
+                    // Generate skill boxes
+                    generateSkillBoxes(selectedJob);
+                } else {
+                    // Hide skill container if no class is selected
+                    skillContainer.classList.add("hidden");
+                }
+            };
         };
+
+
+        // Generate skill boxes for selected class
+        function generateSkillBoxes(className) {
+            const skillBoxes = document.getElementById("skillBoxes");
+            
+            // Clear existing skill boxes
+            skillBoxes.innerHTML = '';
+            
+            // Get skills for the selected class
+            const classSkills = skillData[className];
+            
+            // If class has skills, generate skill boxes
+            if (classSkills && classSkills.length > 0) {
+                classSkills.forEach(skill => {
+                    const skillBox = document.createElement('div');
+                    skillBox.className = 'skill-box';
+                    skillBox.innerHTML = `
+                        <input type="checkbox" id="${skill.id}" class="skill-checkbox" data-job="${className}" data-skill-id="${skill.id}">
+                        <img src="${skill.image}" alt="${skill.name}" class="skill-image">
+                        <span>${skill.name}</span>
+                    `;
+                    skillBoxes.appendChild(skillBox);
+                });
+            }
+        }
+
+
+
+        
     </script>
 
 
