@@ -25,14 +25,14 @@ public class ImageController {
     }
 
     @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("image") MultipartFile file, Model model) {
+    public String handleFileUpload(@RequestParam("images") MultipartFile file, Model model) {
         try {
             // Save uploaded file
             String filename = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
             File uploadFile = new File(UPLOAD_DIR, filename);
             file.transferTo(uploadFile);
 
-            return "result";
+            return "results";
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", "Failed to process image.");
