@@ -186,8 +186,8 @@
         </div>
 
         <div class="form-group">
-            <label for="setting">중첩:</label>
-            <select name="setting" id="setting">
+            <label for="dup_count">중첩:</label>
+            <select name="dup_count" id="dup_count">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -196,8 +196,8 @@
         </div>
 
         <div class="form-group">
-            <label for="setting">코어 개수:</label>
-            <select name="setting" id="setting">
+            <label for="core_count">코어 개수:</label>
+            <select name="core_count" id="core_count">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -206,8 +206,8 @@
         </div>
 
         <div class="form-group">
-            <label for="setting">이미지 개수:</label>
-            <input type="number" name="setting" id="setting" min="1" max="4" value="2">
+            <label for="image_count">이미지 개수:</label>
+            <input type="number" name="image_count" id="image_count" min="1" max="4" value="2">
         </div>
 
         <button type="button" id="processButton">Process</button>
@@ -293,21 +293,36 @@
         
         // Process button click handler
         document.getElementById('processButton').addEventListener('click', function() {
-            if (uploadedFiles.length === 0) {
+            // Add event parameter and preventDefault
+            event.preventDefault();
+
+            // Create a FormData object
+            const formData = new FormData();
+
+            // 1️⃣ Get dropdown selection (코어 개수)
+            const settingValue = document.getElementById('dup_count').value;
+            formData.append('dup_count', settingValue);
+
+            // 2️⃣ Get selected skills (checkboxes)
+            document.querySelectorAll('.skill-checkbox:checked').forEach((checkbox) => {
+                formData.append('skills', checkbox.getAttribute('data-skill-id')); // Send skill ID
+            });
+
+            // 3️⃣ Get uploaded image files
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length === 0) {
                 alert('이미지를 하나 이상 업로드해주세요.');
                 return;
             }
-            
-            // Create FormData object
-            const formData = new FormData(document.getElementById('uploadForm'));
-            
-            // Remove any existing file inputs
-            formData.delete('images');
-            
-            // Add all uploaded files
-            uploadedFiles.forEach(file => {
-                formData.append('images', file);
-            });
+            for (let i = 0; i < fileInput.files.length; i++) {
+                formData.append('images', fileInput.files[i]); // Append each image file
+            }
+
+            // Debugging: Log FormData contents
+            console.log("FormData contents:");
+            for (let pair of formData.entries()) {
+                console.log(pair[0], pair[1]);
+            }
             
             // Submit the form
             fetch('/upload', {
