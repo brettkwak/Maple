@@ -25,12 +25,25 @@ public class ImageController {
     }
 
     @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("images") MultipartFile file, Model model) {
+    public String handleFileUpload(
+            @RequestParam("dup_count") Integer dupCount,
+            @RequestParam("class") String className,
+            @RequestParam("core_count") Integer coreCount,
+            @RequestParam("image_count") Integer imageCount,
+            // MultipartFile file, 
+            Model model) {
         try {
-            // Save uploaded file
-            String filename = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
-            File uploadFile = new File(UPLOAD_DIR, filename);
-            file.transferTo(uploadFile);
+            // Add all data to model
+            model.addAttribute("dupCount", dupCount);
+            model.addAttribute("className", className); 
+            model.addAttribute("coreCount", coreCount);
+            model.addAttribute("imageCount", imageCount);
+
+
+            // // Save uploaded file
+            // String filename = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+            // File uploadFile = new File(UPLOAD_DIR, filename);
+            // file.transferTo(uploadFile);
 
             return "results";
         } catch (Exception e) {
@@ -47,5 +60,12 @@ public class ImageController {
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);
+    }
+
+    @GetMapping("/results")
+    public String showResults(Model model) {
+        // You'll need to pass the same data to the model again here
+        // This could be done by storing the data in session or retrieving it from a database
+        return "results";
     }
 }
