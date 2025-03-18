@@ -293,6 +293,9 @@
         
         // Process button click handler
         document.getElementById('processButton').addEventListener('click', function() {
+            // Add event parameter and preventDefault
+            event.preventDefault();
+
             // Create a FormData object
             const formData = new FormData();
 
