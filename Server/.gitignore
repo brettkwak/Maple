@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 
 ### Skill Images ###
-!**/src/main/resources/static/images/skills/
+/src/main/resources/static/images/skills/
 
 ### STS ###
 .apt_generated
