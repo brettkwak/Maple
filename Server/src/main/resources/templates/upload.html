@@ -293,36 +293,7 @@
         
         // Process button click handler
         document.getElementById('processButton').addEventListener('click', function() {
-            // Add event parameter and preventDefault
-            event.preventDefault();
 
-            // Create a FormData object
-            const formData = new FormData();
-
-            // 1️⃣ Get dropdown selection (코어 개수)
-            const settingValue = document.getElementById('dup_count').value;
-            formData.append('dup_count', settingValue);
-
-            // 2️⃣ Get selected skills (checkboxes)
-            document.querySelectorAll('.skill-checkbox:checked').forEach((checkbox) => {
-                formData.append('skills', checkbox.getAttribute('data-skill-id')); // Send skill ID
-            });
-
-            // 3️⃣ Get uploaded image files
-            const fileInput = document.getElementById('fileInput');
-            if (fileInput.files.length === 0) {
-                alert('이미지를 하나 이상 업로드해주세요.');
-                return;
-            }
-            for (let i = 0; i < fileInput.files.length; i++) {
-                formData.append('images', fileInput.files[i]); // Append each image file
-            }
-
-            // Debugging: Log FormData contents
-            console.log("FormData contents:");
-            for (let pair of formData.entries()) {
-                console.log(pair[0], pair[1]);
-            }
             
             // Submit the form
             fetch('/upload', {
