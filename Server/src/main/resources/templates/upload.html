@@ -323,14 +323,15 @@
                 body: formData
             })
             .then(response => {
-                if (response.ok) {
-                    return response.text();
+                if (response.redirected) {
+                    // Follow the redirect that server sent
+                    window.location.href = response.url;
+                    return;
                 }
+                if (!response.ok) {
                     throw new Error('Network response was not ok.');
-            })
-            .then(data => {
-                // Redirect or handle response
-                document.body.innerHTML = data;
+                }
+                return response.text();
             })
             .catch(error => {
                 console.error('Error:', error);
