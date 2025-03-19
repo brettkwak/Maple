@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes({"dupCount", "className", "coreCount", "imageCount"})
+@SessionAttributes({"dupCount", "className", "coreCount", "imageCount", "skills"})
 public class ImageController {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
@@ -38,7 +39,8 @@ public class ImageController {
             @RequestParam("class_name") String className,
             @RequestParam("core_count") Integer coreCount,
             @RequestParam("image_count") Integer imageCount,
-            RedirectAttributes redirectAttributes) {
+            @RequestParam(value = "skills", required = false) List<String> skills,
+            Model model) {
 
         try {
             // Add all data to model
@@ -48,16 +50,17 @@ public class ImageController {
             logger.info("Setting flash attributes: dupCount={}, className={}, ...", dupCount, className);
 
             // Store data in flash attributes
-            redirectAttributes.addFlashAttribute("dupCount", dupCount);
-            redirectAttributes.addFlashAttribute("className", className);
-            redirectAttributes.addFlashAttribute("coreCount", coreCount);
-            redirectAttributes.addFlashAttribute("imageCount", imageCount);
+            model.addAttribute("dupCount", dupCount);
+            model.addAttribute("className", className);
+            model.addAttribute("coreCount", coreCount);
+            model.addAttribute("imageCount", imageCount);
+            model.addAttribute("skills", skills);
         
             // Redirect to results page
             return "redirect:/results";
         } catch (Exception e) {
             e.printStackTrace();
-            redirectAttributes.addAttribute("error", "Failed to process image.");
+            model.addAttribute("error", "Failed to process image.");
             return "upload";
         }
 }

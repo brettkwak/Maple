@@ -309,6 +309,12 @@
             formData.append('core_count', coreCount);
             formData.append('image_count', imageCount);
 
+            // Collect selected skills
+            const selectedSkills = document.querySelectorAll('.skill-checkbox:checked');
+            selectedSkills.forEach(skill => {
+                formData.append('skills', skill.dataset.skillId);
+            });
+
 
 
             // Debugging: Log FormData contents
