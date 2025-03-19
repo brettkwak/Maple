@@ -9,9 +9,10 @@
 </head>
 <body>
     <h1>계산 결과</h1>
-    <div>
+    <div class="result-section">
+        <h2>Settings</h2>
+        <p>Class: <span th:text="${className}"></span></p>
         <p>Duplication Count: <span th:text="${dupCount}"></span></p>
-        <p>Class Name: <span th:text="${className}"></span></p>
         <p>Core Count: <span th:text="${coreCount}"></span></p>
         <p>Image Count: <span th:text="${imageCount}"></span></p>
     </div>
