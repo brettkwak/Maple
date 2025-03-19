@@ -16,11 +16,13 @@
         <p>Image Count: <span th:text="${imageCount}"></span></p>
     </div>
 
-    <div class="result-section" th:if="${skills != null and !skills.empty}">
+        <div class="result-section" th:if="${skills != null and !skills.empty}">
         <h2>Selected Skills</h2>
         <ul>
             <li th:each="skill : ${skills}" th:text="${skill}"></li>
         </ul>
     </div>
+    
+    <a href="/">Back to Upload</a>
 </body>
 </html>
