@@ -35,7 +35,7 @@ public class ImageController {
     @PostMapping("/upload")
     public String handleFileUpload(
             @RequestParam("dup_count") Integer dupCount,
-            @RequestParam("class") String className,
+            @RequestParam("class_name") String className,
             @RequestParam("core_count") Integer coreCount,
             @RequestParam("image_count") Integer imageCount,
             RedirectAttributes redirectAttributes) {
