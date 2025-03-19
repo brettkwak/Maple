@@ -14,8 +14,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 public class ImageController {
+    private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
 
     private static final String UPLOAD_DIR = "uploads/";
 
@@ -34,6 +38,7 @@ public class ImageController {
             Model model) {
         try {
             // Add all data to model
+            logger.info("Setting flash attributes: dupCount={}, className={}, ...", dupCount, className);
             model.addAttribute("dupCount", dupCount);
             model.addAttribute("className", className); 
             model.addAttribute("coreCount", coreCount);
