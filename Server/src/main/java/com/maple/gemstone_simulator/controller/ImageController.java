@@ -2,6 +2,7 @@ package com.maple.gemstone_simulator.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
@@ -18,7 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Controller
+@RequestMapping("/")
+@SessionAttributes({"dupCount", "className", "coreCount", "imageCount"})
 public class ImageController {
+
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
 
     private static final String UPLOAD_DIR = "uploads/";
@@ -34,29 +38,29 @@ public class ImageController {
             @RequestParam("class") String className,
             @RequestParam("core_count") Integer coreCount,
             @RequestParam("image_count") Integer imageCount,
-            // MultipartFile file, 
-            Model model) {
+            RedirectAttributes redirectAttributes) {
+
         try {
             // Add all data to model
+
+            
+        
             logger.info("Setting flash attributes: dupCount={}, className={}, ...", dupCount, className);
-            model.addAttribute("dupCount", dupCount);
-            model.addAttribute("className", className); 
-            model.addAttribute("coreCount", coreCount);
-            model.addAttribute("imageCount", imageCount);
 
-
-            // // Save uploaded file
-            // String filename = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
-            // File uploadFile = new File(UPLOAD_DIR, filename);
-            // file.transferTo(uploadFile);
-
-            return "results";
+            // Store data in flash attributes
+            redirectAttributes.addFlashAttribute("dupCount", dupCount);
+            redirectAttributes.addFlashAttribute("className", className);
+            redirectAttributes.addFlashAttribute("coreCount", coreCount);
+            redirectAttributes.addFlashAttribute("imageCount", imageCount);
+        
+            // Redirect to results page
+            return "redirect:/results";
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("error", "Failed to process image.");
+            redirectAttributes.addAttribute("error", "Failed to process image.");
             return "upload";
         }
-    }
+}
 
     @GetMapping("/images/{filename}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
@@ -71,6 +75,7 @@ public class ImageController {
     public String showResults(Model model) {
         // You'll need to pass the same data to the model again here
         // This could be done by storing the data in session or retrieving it from a database
+        logger.info("Model attributes after redirect: {}", model.asMap());
         return "results";
     }
 }
