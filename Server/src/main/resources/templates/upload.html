@@ -172,8 +172,8 @@
         </div>
 
         <div class="form-group">
-            <label for="class">직업:</label>
-            <select name="class" id="class">
+            <label for="class_name">직업:</label>
+            <select name="class_name" id="class_name">
                 <option value="" selected="selected">직업군을 먼저 선택하세요</option>
             </select>
         </div>
@@ -301,11 +301,11 @@
 
             // 1️⃣ Get dropdown selection (코어 개수)
             const dupCount = document.getElementById('dup_count').value;
-            const classValue = document.getElementById('class').value;
+            const classValue = document.getElementById('class_name').value;
             const coreCount = document.getElementById('core_count').value;
             const imageCount = document.getElementById('image_count').value;            
             formData.append('dup_count', dupCount);
-            formData.append('class', classValue);
+            formData.append('class_name', classValue);
             formData.append('core_count', coreCount);
             formData.append('image_count', imageCount);
 
@@ -326,7 +326,7 @@
                 if (response.ok) {
                     return response.text();
                 }
-                throw new Error('Network response was not ok.');
+                    throw new Error('Network response was not ok.');
             })
             .then(data => {
                 // Redirect or handle response
@@ -1023,7 +1023,7 @@
         // Run on page load
         window.onload = function() {
             const classCategorySelect = document.getElementById("classCategory");
-            const classSelect = document.getElementById("class");
+            const classSelect = document.getElementById("class_name");
             const skillContainer = document.getElementById("skillSelectionContainer");
             
             // Event on category selection
